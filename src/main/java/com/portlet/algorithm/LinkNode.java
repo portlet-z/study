@@ -46,10 +46,46 @@ public class LinkNode {
         return head;
     }
 
+    public Node deleteValue(Node head, int value){
+        if(null == head){
+            return null;
+        }
+        while (head != null && head.getValue() == value){
+            head = head.getNext();
+        }
+        Node prev = head;
+        while (prev.getNext() != null){
+            if(prev.getNext().getValue() == value){
+                prev.setNext(prev.getNext().getNext());
+            }else {
+                prev = prev.getNext();
+            }
+        }
+        return head;
+    }
+
+    public Node reverseNode(Node head){
+        Node newHead = null;
+        Node curHead = head;
+        while (curHead != null){
+            Node next = curHead.getNext();
+            curHead.setNext(newHead);
+            newHead = curHead;
+            curHead = next;
+        }
+        return newHead;
+    }
+
     public static void main(String[] args){
         LinkNode linkNode = new LinkNode();
         Node head = linkNode.createLinkNode(Arrays.asList(1,2,3,4));
         head.printNode(head);
+        System.out.println();
+        Node reverse = linkNode.reverseNode(head);
+        reverse.printNode(reverse);
+        System.out.println();
+        Node delete = linkNode.deleteValue(head, 2);
+        delete.printNode(delete);
     }
 
     @Test
