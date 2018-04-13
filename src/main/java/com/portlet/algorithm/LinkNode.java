@@ -3,6 +3,7 @@ package com.portlet.algorithm;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +48,37 @@ public class LinkNode {
 
     public static void main(String[] args){
         LinkNode linkNode = new LinkNode();
-        Node head = linkNode.createLinkNode(Arrays.asList(1,2));
+        Node head = linkNode.createLinkNode(Arrays.asList(1,2,3,4));
         head.printNode(head);
+    }
+
+    @Test
+    public void test(){
+        Node node1 = new Node(1);
+        Node node2 = new Node(2);
+        Node node3 = new Node(3);
+        Node node4 = new Node(4);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+        node4.setNext(node2);
+        System.out.println(cycleLinkNode(node1));
+    }
+
+    public boolean cycleLinkNode(Node head){
+        if(null == head || null == head.getNext()){
+            return false;
+        }
+        Node fast = head;
+        Node slow = head;
+        while (true){
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+            if(fast == null || fast.getNext() == null){
+                return false;
+            }else if(fast == slow || fast.getNext() == slow){
+                return true;
+            }
+        }
     }
 }
